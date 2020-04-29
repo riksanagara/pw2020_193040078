@@ -1,0 +1,43 @@
+*{
+    margin : 0;
+    padding : 0;
+}
+.navbar{
+    height : 40px;
+    background-color: #00bfff;
+    position: fixed;
+    width: 100%;
+    top : 0;
+    z-index: 99;
+}
+.container{
+    margin: auto;
+    margin-top: 60px;
+    width: 800px;
+}
+.admin{
+    float: right;
+    margin: 10px;
+}
+.gambar{
+    float: left;
+    padding: 10px;
+    
+}
+.detail{
+    float: left;
+    padding: 10px;
+    width: 500px;
+}
+.judul{
+    font-weight: bold;
+    font-size: 28px;
+}
+table{
+    margin-top: 20px;
+    line-height: 40px;
+}
+.tombol{
+    float: right;
+    padding: 50px;
+}

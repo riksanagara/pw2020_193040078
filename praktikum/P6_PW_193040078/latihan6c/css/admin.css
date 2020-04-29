@@ -1,0 +1,30 @@
+*{
+    margin : 0;
+    padding : 0;
+}
+.navbar{
+    height : 40px;
+    background-color: #00bfff;
+    position: fixed;
+    width: 100%;
+    top : 0;
+    z-index: 99;
+}
+.container{
+    margin: auto;
+    margin-top: 60px;
+    width: 1000px;
+}
+.admin{
+    float: right;
+    margin: 10px;
+}
+table, td, th{
+    border: 2px solid #00bfff;
+}
+table{
+    border-spacing: 0;
+}
+td{
+    padding: 10px;
+}
