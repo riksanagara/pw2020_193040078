@@ -52,7 +52,7 @@
 
     // Ubah Data
     function ubah($data){
-        global $conn;
+        $conn = koneksi();
 
         $id = ($data['kode_buku']);
         $cover = htmlspecialchars($data['cover']);
