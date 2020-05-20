@@ -3,9 +3,17 @@
     //   menghubungkan dengan file php lain
     require 'php/function.php';
 
-   
+    if(isset($_GET['cari'])){
+        $keyword = $_GET['keyword'];
+        $book = query("SELECT * FROM buku WHERE
+                judul LIKE '%$keyword%' OR
+                penerbit LIKE '%$keyword%' OR
+                pengarang LIKE '%$keyword%' OR
+                tahun LIKE '%$keyword%' OR
+                kategori LIKE '%$keyword%' ");
+    }else{
         $book = query("SELECT * FROM buku");
-    
+    }
 
 ?>
 
@@ -20,8 +28,20 @@
 </head>
 <body>
     <div class="navbar">
+        <div class="admin">
+           <form action="php/admin.php">
+               <button>Admin</button>
+           </form>
+        </div>
     </div>
     <div class="container">  
+    <form action="" method="get">
+        <input type="text" name="keyword" autofocus>
+        <button type="submit" name="cari">Cari</button>
+    </form>
+    <?php if(empty($book)) : ?>
+        <h1>Data Tidak Ditemukan !</h1>
+    <?php else : ?>
     <div class="container">
     <?php foreach ($book as $books) : ?> 
     <div class="buku">
@@ -40,5 +60,6 @@
     </div>                 
     <?php endforeach; ?>
     </div>
+    <?php endif ?>
 </body>
 </html>

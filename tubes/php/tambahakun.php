@@ -1,34 +1,38 @@
 <?php
+    session_start();
+    if(!isset($_SESSION["username"])){
+        header("Location: login.php");
+        exit;
+    }
+    if($_SESSION['level']!='admin'){
+      header("Location: ../index.php");
+      exit;
+    }
     require 'function.php';
 
-    if(isset($_POST["register"])){
-        if(registrasi($_POST) > 0){
+    if(isset($_POST['tambah'])) {
+        if(tambahakun($_POST) > 0) {
             echo "<script>
-                    alert('Registrasi Berhasil!');
-                    document.location.href = 'login.php';
+                    alert('Data Berhasil Ditambahkan!');
+                    document.location.href = 'admin.php';
                 </script>";
         } else {
             echo "<script>
-                    alert('Registrasi Gagal !');
+                    alert('Data Gagal Ditambahkan!');
+                    document.location.href = 'admin.php';
                 </script>";
-        }
+         }
     }
-    if(!isset($_SESSION['keranjang'])){
-      $notif=0;
-    }else{
-      $notif=count($_SESSION['keranjang']);
-    }
+    $level = query("SELECT DISTINCT level FROM user ORDER BY level");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Daftar</title>
-
-     <!-- Favicon -->
+    <title>Tambah Data</title>
+    
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/icon/favicon-16x16.png">
@@ -45,6 +49,7 @@
 </head>
 <body class="bg-light">
 
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: white;">
     <div class="container">
@@ -54,68 +59,65 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-        
-          <li class="nav-item mx-2">
-            <a href="keranjang.php" class="btn nav-link position-relative">
-              <svg class="bi bi-bag" width="25" height="25" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M14 5H2v9a1 1 0 001 1h10a1 1 0 001-1V5zM1 4v10a2 2 0 002 2h10a2 2 0 002-2V4H1z" clip-rule="evenodd"/>
-                <path d="M8 1.5A2.5 2.5 0 005.5 4h-1a3.5 3.5 0 117 0h-1A2.5 2.5 0 008 1.5z"/>
-              </svg>
-              <span class="badge badge-dark badge-pill mt-0 position-absolute"><?=$notif?></span>
-            </a>
+        <li class="nav-item mx-2">
+            <a class="nav-link mx-2" href="admin.php">Dashboard</a>
           </li>
           <li class="nav-item mx-2">
-            <a href="login.php" class="btn btn-dark text-white nav-link px-4">
-              Login
+            <a href="logout.php" class="btn btn-dark text-white nav-link px-4">
+              Logout
             </a>
-          </li>
-          <li class="nav-item mx-2">
-            <a class="nav-link btn btn-dark text-white px-4" href="registrasi.php">Daftar</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- form daftar -->
-  <section>
-  <div class="container daftar">
+    <!-- Form Tambah -->
+    <section>
+    <div class="container tambah">
     <div class="row justify-content-center">
       <div class="col-lg-6 col-sm-12"> 
         <div class="card mb-3">
           <div class="card-header text-center bg-dark text-white">
-            <h5>Daftar</h5>
+            <h5>Tambah Akun</h5>
           </div>
           <div class="card-body p-5">
-            <form action="" method="post">
-              <div class="form-group mt-4">
-                <div class="input-group">
-                  <!-- <label for="username">Username</label> -->
-                  <input type="text" class="form-control" id="username" name="name" placeholder="Nama Lengkap">
-                </div>
-              </div>
-              <div class="form-group mt-4">
-                <div class="input-group">
-                  <!-- <label for="username">Username</label> -->
-                  <input type="text" class="form-control" id="username" name="username" placeholder="Nama Pengguna">
-                </div>
-              </div>
-              <div class="form-group mt-4">
-                <div class="input-group">
-                  <!-- <label for="exampleInputPassword1">Password</label> -->
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Kata Sandi">
-                </div>
-              </div>
-              <div class="form-group">
-    <!-- <label for="alamat">Alamat</label> -->
-    <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Alamat"></textarea>
+            <form action="" method="post" enctype="multipart/form-data">
+            
+            
+            <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" name="username">
   </div>
-              <button type="submit" class="btn btn-dark mt-2 btn-block mt-4" name="register">Daftar</button>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+  <div class="form-group">
+    <label for="nama">Nama</label>
+    <input type="text" class="form-control" id="nama" name="nama">
+  </div>
+  <div class="form-group">
+    <label for="level">Level</label>
+    <select class="form-control" id="user" name="level">
+      <option>--- Pilih Level Akun ---</option>
+      <?php foreach ($level as $levels) :?>
+        <option value="<?=$levels['level']?>"><?=$levels['level']?></option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="alamat">Alamat</label>
+    <textarea class="form-control" id="alamat" name="alamat" rows="3"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-dark float-right" name="tambah">Tambah Akun</button>
+  <a href="admin.php" class="btn btn-dark float-right mr-4">Kembali</a>
+  
+              
             </form>
           </div>
-          <p class="text-center pb-2">Sudah punya akun ? login 
-            <a href="login.php">disini</a>
-          </p>
+         
         </div>
       </div>
     </div>
@@ -131,6 +133,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
 
 </body>
 </html>

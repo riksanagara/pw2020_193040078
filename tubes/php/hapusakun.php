@@ -12,14 +12,14 @@
 
     $id = $_GET['id'];
 
-    if(hapus($id) > 0) {
+    if(hapusakun($id) > 0) {
         echo "<script>
-            alert('Data Berhasil Hapus!');
+            alert('Akun Berhasil Hapus!');
             document.location.href = 'admin.php';
         </script>";
     } else {
         echo "<script>
-            alert('Data Gagal Hapus!');
+            alert('Akun Gagal Hapus!');
             document.location.href = 'admin.php';
         </script>";
     }

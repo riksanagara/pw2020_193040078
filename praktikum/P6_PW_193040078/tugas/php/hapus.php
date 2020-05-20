@@ -1,13 +1,5 @@
 <?php 
-    session_start();
-    if(!isset($_SESSION["username"])){
-        header("Location: login.php");
-        exit;
-    }
-    if($_SESSION['level']!='admin'){
-        header("Location: ../index.php");
-        exit;
-      }
+
     require 'function.php';
 
     $id = $_GET['id'];

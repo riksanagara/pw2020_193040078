@@ -4,6 +4,10 @@
         header("Location: login.php");
         exit;
     }
+    if($_SESSION['level']!='admin'){
+      header("Location: ../index.php");
+      exit;
+    }
     require 'function.php';
 
     if(isset($_POST['tambah'])) {
@@ -43,7 +47,31 @@
     <link rel="stylesheet" href="../css/style.css">
 
 </head>
-<body>
+<body class="bg-light">
+
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: white;">
+    <div class="container">
+      <a class="navbar-brand" href="../index.php"><img src="../assets/icon/favicon.ico" alt=""></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item mx-2">
+            <a class="nav-link mx-2" href="admin.php">Dashboard</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a href="logout.php" class="btn btn-dark text-white nav-link px-4">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
     <!-- Form Tambah -->
     <section>
     <div class="container tambah">
@@ -110,7 +138,11 @@
   </div>
   </section>
 
-
+  <footer class="bg-dark p-3 mt-5">
+    <div class="container">
+      <p class="text-center text-light">&copy; 2020 Riksa Ksusumah Nagara</p>
+    </div>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
